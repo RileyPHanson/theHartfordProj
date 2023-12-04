@@ -1,0 +1,53 @@
+@media (max-width: 550px) {
+    .w-100-sm {
+        width: 100%;
+    }
+}
+
+@media (min-width: 551px) {
+    .w-25-other {
+        width: 25%;
+    }
+}
+
+@media (max-width: 550px) {
+    .w-25-sm {
+        width: 25%;
+    }
+}
+
+@media (min-width: 551px) {
+    .w-15-other {
+        width: 15%;
+    }
+}
+
+#information {
+    border-color: lightblue !important;
+}
+
+#admin-data {
+    border-color: lightblue !important;
+}
+
+#login {
+    margin-top: 50px;
+    height: 45px;
+}
+
+#username {
+    height: 45px;
+}
+
+.custom-top-margin {
+    margin-top: 75px;
+}
+
+#password {
+    height: 45px;
+}
+
+#state-dropdown {
+    max-height: 200px;
+    overflow-y: scroll;
+}
