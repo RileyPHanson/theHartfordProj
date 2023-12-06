@@ -77,3 +77,8 @@
     max-height: 200px;
     overflow-y: scroll;
 }
+
+#informationbox {
+    max-height: 200px;
+    overflow-y: scroll;
+}

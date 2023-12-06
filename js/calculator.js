@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     $.ajax({
         url: 'https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/resource?transactionId=make&makeId=NULL&modelId=NULL&yearId=NULL',
@@ -135,6 +136,7 @@ $('#year-dropdown').on('click', '.dropdown-item', function(event) {
         console.log("Dropdown item clicked:", $(this).text());
         $('#year-dropdown-button').text($(this).text());
 });
+
 
 $(document).on('click', '#submit-btn', function(event) {
     event.preventDefault();
