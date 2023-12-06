@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $.ajax({
-        url: 'https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/resource?transactionId=make&makeId=NULL',
+        url: 'https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/resource?transactionId=make&makeId=NULL&modelId=NULL&yearId=NULL',
         type: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -18,7 +18,7 @@ $(document).ready(function() {
 function getModels() {
     let selectedMake = $('#make-dropdown-button').text()
     $.ajax({
-        url: `https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/resource?transactionId=NULL&makeId=${selectedMake}`,
+        url: `https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/resource?transactionId=NULL&makeId=${selectedMake}&modelId=NULL&yearId=NULL`,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -34,8 +34,9 @@ function getModels() {
 }
 
 function getYears() {
+    let selectedModel = $('#model-dropdown-button').text()
     $.ajax({
-        url: `https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/resource?transactionId=NULL&makeId=NULL&`,
+        url: `https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/resource?transactionId=NULL&makeId=NULL&modelId=${selectedModel}&yearId=NULL`,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -78,7 +79,12 @@ function updateModelDropdown(models) {
 }
 
 function updateYearDropdown(years) {
-
+    let $dropdown = $('#year-dropdown');
+    $dropdown.empty();
+    years.forEach(function(year) {
+        let yearName = year[0];
+        $dropdown.append($('<li>').append($('<a>').attr('href', '#').addClass('dropdown-item').text(yearName)));
+    });
 }
 
 $('#make-dropdown').on('click', '.dropdown-item', function(event) {
@@ -94,6 +100,7 @@ $('#model-dropdown').on('click', '.dropdown-item', function(event) {
         event.preventDefault();
         console.log("Dropdown item clicked:", $(this).text());
         $('#model-dropdown-button').text($(this).text());
+        $('#year-dropdown-button').text("Year")
         getYears()
 });
 
