@@ -61,6 +61,15 @@ $(document).ready(function() {
 });
 
 function updateMakeDropdown(makes) {
+    makes.sort(function(a, b) {
+        if (a[1] < b[1]) {
+            return -1;
+        }
+        if (a[1] > b[1]) {
+            return 1;
+        }
+        return 0;
+    });
     let $dropdown = $('#make-dropdown');
     $dropdown.empty();
     makes.forEach(function(make) {
@@ -69,7 +78,18 @@ function updateMakeDropdown(makes) {
     });
 }
 
+
 function updateModelDropdown(models) {
+    models.sort(function(a, b) {
+        if (a[0] < b[0]) {
+            return -1;
+        }
+        if (a[0] > b[0]) {
+            return 1;
+        }
+        return 0;
+    });
+
     let $dropdown = $('#model-dropdown');
     $dropdown.empty();
     models.forEach(function(model) {
@@ -78,7 +98,12 @@ function updateModelDropdown(models) {
     });
 }
 
+
 function updateYearDropdown(years) {
+    years.sort(function(a, b) {
+        return a[0] - b[0];
+    });
+
     let $dropdown = $('#year-dropdown');
     $dropdown.empty();
     years.forEach(function(year) {
@@ -86,6 +111,7 @@ function updateYearDropdown(years) {
         $dropdown.append($('<li>').append($('<a>').attr('href', '#').addClass('dropdown-item').text(yearName)));
     });
 }
+
 
 $('#make-dropdown').on('click', '.dropdown-item', function(event) {
         event.preventDefault();
@@ -129,13 +155,17 @@ $(document).on('click', '#submit-btn', function(event) {
                 data.forEach((item, index) => {
                     count++
                     $('#informationbox').append(`<p>${index + 1}) ${item}</p>`)
-                    if(count < 5 && count > 0){
-                        $('#risk-box').append(`<img src="images/low%20risk%20image.jpg" alt="lowrisk">`).addClass("w-15-other w-25-sm")
-                    }
                 });
             } else {
             $('#informationbox').text('No data found')
-        }
+            }
+            if(count < 5 && count > 0){
+                $('#risk-box').append(`<img src="images/low%20risk%20image.jpg" alt="lowrisk">`).addClass("w-15-other w-25-sm")
+            } else if (count >= 5 && count < 10) {
+                $('#risk-box').append(`<img src="images/medium%20risk%20image.jpg" alt="mediumrisk">`).addClass("w-15-other w-25-sm")
+            } else if (count >= 10) {
+                $('#risk-box').append(`<img src="images/high%20risk%20image.jpg" alt="highrisk">`).addClass("w-15-other w-25-sm")
+            }
         },
         error: function(xhr, status, error) {
             console.error('Error occurred:', xhr.responseText);
