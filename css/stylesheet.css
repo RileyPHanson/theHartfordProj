@@ -28,7 +28,7 @@
     }
 }
 
-#information {
+#informationbox {
     border-color: lightblue !important;
 }
 
@@ -59,6 +59,21 @@
 }
 
 #state-dropdown {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+#make-dropdown {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+#model-dropdown {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+#year-dropdown {
     max-height: 200px;
     overflow-y: scroll;
 }

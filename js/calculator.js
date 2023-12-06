@@ -92,8 +92,8 @@ $('#make-dropdown').on('click', '.dropdown-item', function(event) {
         console.log("Dropdown item clicked:", $(this).text());
         $('#make-dropdown-button').text($(this).text());
         $('#model-dropdown-button').text("Model")
+        $('#year-dropdown-button').text("Year")
         getModels()
-    //
 });
 
 $('#model-dropdown').on('click', '.dropdown-item', function(event) {
@@ -110,5 +110,78 @@ $('#year-dropdown').on('click', '.dropdown-item', function(event) {
         $('#year-dropdown-button').text($(this).text());
 });
 
+$(document).on('click', '#submit-btn', function(event) {
+    event.preventDefault();
+    let selectedMake = $('#make-dropdown-button').text()
+    let selectedModel = $('#model-dropdown-button').text()
+    let selectedYear = $('#year-dropdown-button').text()
+    let count = 0
+    $('#risk-box').empty();
+
+    $.ajax({
+        url: `https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/resource?transactionId=NULL&makeId=${selectedMake}&modelId=${selectedModel}&yearId=${selectedYear}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log('Success:', data);
+            $('#informationbox').empty();
+            if (data.length > 0) {
+                data.forEach((item, index) => {
+                    count++
+                    $('#informationbox').append(`<p>${index + 1}) ${item}</p>`)
+                    if(count < 5 && count > 0){
+                        $('#risk-box').append(`<img src="images/low%20risk%20image.jpg" alt="lowrisk">`).addClass("w-15-other w-25-sm")
+                    }
+                });
+            } else {
+            $('#informationbox').text('No data found')
+        }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error occurred:', xhr.responseText);
+            console.error('Status:', status);
+            console.error('Error:', error);
+        }
+    });
+});
 
 
+$(document).on('click', '#add-admin', function(event) {
+    event.preventDefault();
+    let username = $('#username')
+    let password = $('#password')
+
+    $.ajax({
+        url: `https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/addAdmin?userName=${username}&userPassword=${password}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log('Success:', data);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error occurred:', xhr.responseText);
+            console.error('Status:', status);
+            console.error('Error:', error);
+        }
+    });
+});
+
+$(document).on('click', '#make-admin', function(event) {
+    event.preventDefault();
+    let username = $('#username')
+    let password = $('#password')
+
+    $.ajax({
+        url: `https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/makeAdmin?userName=${username}&userPassword=${password}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log('Success:', data);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error occurred:', xhr.responseText);
+            console.error('Status:', status);
+            console.error('Error:', error);
+        }
+    });
+});
