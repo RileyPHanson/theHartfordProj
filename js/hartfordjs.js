@@ -37,5 +37,23 @@ function checkCredentials () {
 }
 
 function registerUser() {
-    console.log('testing')
+    const regUsername = $('#reg-username').val()
+    const regPass = $('#reg-password').val()
+
+    $.ajax({
+        url: `https://1o6d6cij23.execute-api.us-east-1.amazonaws.com/test/adduser?userName=${regUsername}&userPassword=${regPass}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log('Success:', data);
+            alert(data)
+            $('#reg-username').val("")
+            $('#reg-password').val("")
+        },
+        error: function(xhr, status, error) {
+            console.error('Error occurred:', xhr.responseText);
+            console.error('Status:', status);
+            console.error('Error:', error);
+        }
+    });
 }
