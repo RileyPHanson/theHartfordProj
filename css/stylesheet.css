@@ -10,6 +10,12 @@
     }
 }
 
+@media (min-width: 551px) {
+    .w-50-other {
+        width: 50%;
+    }
+}
+
 @media (max-width: 550px) {
     .w-25-sm {
         width: 25%;
@@ -31,6 +37,11 @@
 }
 
 #login {
+    margin-top: 50px;
+    height: 45px;
+}
+
+#register {
     margin-top: 50px;
     height: 45px;
 }
