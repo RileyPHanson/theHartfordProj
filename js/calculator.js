@@ -173,13 +173,6 @@ $(document).on('click', '#submit-btn', function(event) {
             } else {
             $('#informationbox').text('No data found')
             }
-            if(count < 5 && count > 0){
-                $('#risk-box').append(`<img src="images/low%20risk%20image.jpg" alt="lowrisk">`).addClass("w-15-other w-25-sm")
-            } else if (count >= 5 && count < 10) {
-                $('#risk-box').append(`<img src="images/medium%20risk%20image.jpg" alt="mediumrisk">`).addClass("w-15-other w-25-sm")
-            } else if (count >= 10) {
-                $('#risk-box').append(`<img src="images/high%20risk%20image.jpg" alt="highrisk">`).addClass("w-15-other w-25-sm")
-            }
             calcPremium(count)
         },
         error: function(xhr, status, error) {
@@ -232,7 +225,7 @@ $(document).on('click', '#make-admin', function(event) {
 });
 
 function  calcPremium (recalls) {
-    let premium
+    let premium = 0
     let selectedMake = $('#make-dropdown-button').text()
     let selectedModel = $('#model-dropdown-button').text()
     let selectedYear = $('#year-dropdown-button').text()
@@ -246,11 +239,19 @@ function  calcPremium (recalls) {
             console.log('Success:', data)
             premium = 1000 + (500 * recalls * .07) + (200 * data.count *.04)
             $('#premiumbox').append(`<h3>Premium $${premium}</h3>`)
+            if(premium >= 1000 && premium < 1500){
+                $('#risk-box').append(`<img src="images/low%20risk%20image.jpg" alt="lowrisk">`).addClass("w-15-other w-25-sm")
+            } else if (premium >= 1500 && premium < 2500) {
+                $('#risk-box').append(`<img src="images/medium%20risk%20image.jpg" alt="mediumrisk">`).addClass("w-15-other w-25-sm")
+            } else if (premium >= 2500) {
+                $('#risk-box').append(`<img src="images/high%20risk%20image.jpg" alt="highrisk">`).addClass("w-15-other w-25-sm")
+            }
         },
         error: function(xhr, status, error) {
             console.error('Error occurred:', xhr.responseText);
             console.error('Status:', status);
             console.error('Error:', error);
         }
+
     });
 }
