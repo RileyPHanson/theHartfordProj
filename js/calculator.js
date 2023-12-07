@@ -121,6 +121,10 @@ $('#make-dropdown').on('click', '.dropdown-item', function(event) {
         $('#model-dropdown-button').text("Model")
         $('#year-dropdown-button').text("Year")
         getModels()
+        $('#premiumbox').empty()
+        $('#informationbox').empty()
+        $('#risk-box').empty()
+        $('#risk-box').append(`<h3>Risk</h3>`)
 });
 
 $('#model-dropdown').on('click', '.dropdown-item', function(event) {
@@ -129,12 +133,20 @@ $('#model-dropdown').on('click', '.dropdown-item', function(event) {
         $('#model-dropdown-button').text($(this).text());
         $('#year-dropdown-button').text("Year")
         getYears()
+        $('#premiumbox').empty()
+        $('#informationbox').empty()
+        $('#risk-box').empty()
+        $('#risk-box').append(`<h3>Risk</h3>`)
 });
 
 $('#year-dropdown').on('click', '.dropdown-item', function(event) {
         event.preventDefault();
         console.log("Dropdown item clicked:", $(this).text());
         $('#year-dropdown-button').text($(this).text());
+        $('#premiumbox').empty()
+        $('#informationbox').empty()
+        $('#risk-box').empty()
+        $('#risk-box').append(`<h3>Risk</h3>`)
 });
 
 
@@ -168,6 +180,7 @@ $(document).on('click', '#submit-btn', function(event) {
             } else if (count >= 10) {
                 $('#risk-box').append(`<img src="images/high%20risk%20image.jpg" alt="highrisk">`).addClass("w-15-other w-25-sm")
             }
+            calcPremium(count)
         },
         error: function(xhr, status, error) {
             console.error('Error occurred:', xhr.responseText);
@@ -217,3 +230,28 @@ $(document).on('click', '#make-admin', function(event) {
         }
     });
 });
+
+function  calcPremium (recalls) {
+    let premium
+    let selectedMake = $('#make-dropdown-button').text()
+    let selectedModel = $('#model-dropdown-button').text()
+    let selectedYear = $('#year-dropdown-button').text()
+    $('#premiumbox').empty()
+
+    $.ajax({
+        url: `https://api.nhtsa.gov/complaints/complaintsByVehicle?make=${selectedMake}&model=${selectedModel}&modelYear=${selectedYear}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log('Success:', data)
+            // 1000 +(250 * #ofRecalls * .05) + (100 * #ofComplaints * .025)
+            premium = 1000 + (500 * recalls * .07) + (200 * data.count *.04)
+            $('#premiumbox').text("Premium: " + premium)
+        },
+        error: function(xhr, status, error) {
+            console.error('Error occurred:', xhr.responseText);
+            console.error('Status:', status);
+            console.error('Error:', error);
+        }
+    });
+}
