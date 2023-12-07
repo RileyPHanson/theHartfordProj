@@ -244,9 +244,8 @@ function  calcPremium (recalls) {
         dataType: 'json',
         success: function(data) {
             console.log('Success:', data)
-            // 1000 +(250 * #ofRecalls * .05) + (100 * #ofComplaints * .025)
             premium = 1000 + (500 * recalls * .07) + (200 * data.count *.04)
-            $('#premiumbox').text("Premium: " + premium)
+            $('#premiumbox').append(`<h3>Premium $${premium}</h3>`)
         },
         error: function(xhr, status, error) {
             console.error('Error occurred:', xhr.responseText);
